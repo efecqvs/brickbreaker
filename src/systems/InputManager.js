@@ -11,6 +11,7 @@ export default class InputManager {
 
     init() {
         this.canvas.addEventListener("mousedown", (e) => { 
+            e.preventDefault();
             if(this.game.gameState === "PLAYING" && !this.game.isFiring) { 
                 this.isAiming = true; 
                 this.updateAim(e); 
@@ -18,10 +19,12 @@ export default class InputManager {
         });
         
         this.canvas.addEventListener("mousemove", (e) => { 
+            e.preventDefault();
             if(this.isAiming) this.updateAim(e); 
         });
         
-        this.canvas.addEventListener("mouseup", () => { 
+        this.canvas.addEventListener("mouseup", (e) => { 
+            e.preventDefault();
             if(this.isAiming) { 
                 this.isAiming = false; 
                 this.game.startFire(); 

@@ -303,6 +303,7 @@ export default class Game {
     }
 
     startFire() {
+        if (this.isFiring || this.ballsPool.getActive().length > 0) return;
         this.isFiring = true; this.ballsToFire = this.ballChainCount; this.fireTimer = 0;
         let dx = this.inputManager.targetX - this.fireX, dy = this.inputManager.targetY - (this.canvas.height - 20), dist = Math.hypot(dx, dy);
         this.shootDX = dx / dist; this.shootDY = dy / dist; if(this.shootDY > -0.1) this.shootDY = -0.1;
@@ -317,7 +318,7 @@ export default class Game {
 
     loop() {
         if(this.gameState !== "PLAYING") return; requestAnimationFrame(() => this.loop());
-        let bgColor = (this.rowsSpawned <= 4) ? "#87ceeb" : (this.rowsSpawned <= 20 ? "#3b3b3b" : (this.rowsSpawned <= 40 ? "#4a0000" : "#14002e"));
+        let bgColor = (this.rowsSpawned <= 7) ? "#87ceeb" : (this.rowsSpawned <= 20 ? "#3b3b3b" : (this.rowsSpawned <= 40 ? "#4a0000" : "#14002e"));
         if (this.freezeTurns > 0) bgColor = "#1e3c5a"; 
         this.ctx.fillStyle = bgColor; this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = "rgba(0,0,0,0.1)"; for(let i=0; i<this.canvas.width; i+=32) { for(let j=0; j<this.canvas.height; j+=32) { if((Math.floor(i/32)+Math.floor(j/32))%2===0) this.ctx.fillRect(i,j,32,32); } }
@@ -362,7 +363,7 @@ export default class Game {
         activeTexts.forEach(txt => { txt.update(); txt.draw(this.ctx); });
         activePickups.forEach(p => { p.update(); p.draw(this.ctx); });
         this.drawUpgrades(this.ctx);
-        if(this.isFiring && this.ballsToFire === 0 && activeBalls.length === 0) this.nextTurn();
+        if(this.isFiring && this.ballsToFire === 0 && this.ballsPool.getActive().length === 0) this.nextTurn();
         this.ctx.save(); this.ctx.translate(this.fireX, this.canvas.height - 20); let angle = -Math.PI / 2;
         if (this.inputManager.isAiming || this.isFiring) { let dx = this.inputManager.targetX - this.fireX, dy = this.inputManager.targetY - (this.canvas.height - 20); angle = Math.atan2(dy, dx); }
         this.ctx.fillStyle = "#333"; this.ctx.beginPath(); this.ctx.arc(0, 5, 14, Math.PI, 0); this.ctx.fill(); this.ctx.strokeStyle = "#000"; this.ctx.lineWidth = 2; this.ctx.stroke();
