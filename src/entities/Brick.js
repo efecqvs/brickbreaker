@@ -43,7 +43,7 @@ export default class Brick extends Entity {
         ctx.imageSmoothingEnabled = false;
         ctx.globalCompositeOperation = 'source-over'; 
         
-        let texIndex = this.textureOverride !== -1 ? this.textureOverride : Math.min(this.maxHp - 1, 31);
+        let texIndex = this.textureOverride !== -1 ? this.textureOverride : Math.min(15, Math.floor(Math.log2(this.maxHp) * 1.8));
         let tex = Textures[texIndex];
         
         ctx.fillStyle = "#000000";

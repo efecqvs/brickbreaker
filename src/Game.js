@@ -309,6 +309,19 @@ export default class Game {
         this.shootDX = dx / dist; this.shootDY = dy / dist; if(this.shootDY > -0.1) this.shootDY = -0.1;
     }
 
+    fireLaser(gridX) {
+        const activeBricks = this.bricksPool.getActive();
+        let hitCount = 0;
+        activeBricks.forEach(b => {
+            if (b.gridX === gridX) {
+                b.takeDamage(this.baseBallValue * 10); // Deals 10x base damage
+                this.textsPool.get().spawn(b.x + b.w/2, b.y + b.h/2, "ZAP!", "#ff3333");
+                hitCount++;
+            }
+        });
+        if (hitCount > 0 && window.audioController) window.audioController.playSound('hit');
+    }
+
     updateUI() {
         const uiLevel = document.getElementById("ui-level"), uiGold = document.getElementById("ui-gold"), uiDiamond = document.getElementById("ui-diamond"), uiXpText = document.getElementById("ui-xp-text"), xpFill = document.getElementById("ui-xp-fill");
         if(uiLevel) uiLevel.innerText = `Lvl: ${this.level}`; if(uiGold) uiGold.innerText = `Altın: ${Math.floor(this.goldTotal)}`;
