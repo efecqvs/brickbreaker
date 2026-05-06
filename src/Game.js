@@ -70,20 +70,14 @@ export default class Game {
     }
 
     loadGame() {
-        const saved = localStorage.getItem('megabonk_save');
-        if (!saved) return;
-        try {
-            const data = JSON.parse(saved);
-            this.goldTotal = data.gold || 0;
-            this.diamondTotal = data.diamond || 0;
-            this.inventory = data.inventory || this.inventory;
-            this.permanentStats = data.permanentStats || this.permanentStats;
-            this.launcherStats = data.launcherStats || this.launcherStats;
-            this.gameStats = data.gameStats || this.gameStats;
-            if(data.shopLevels) data.shopLevels.forEach((lvl, i) => { if(this.shopItems[i]) this.shopItems[i].level = lvl; });
-            if(data.launcherLevels) data.launcherLevels.forEach((lvl, i) => { if(this.launcherItems[i]) this.launcherItems[i].level = lvl; });
-            if(data.questStatus) data.questStatus.forEach((stat, i) => { if(this.quests[i]) { this.quests[i].completed = stat.completed; this.quests[i].claimed = stat.claimed; } });
-        } catch(e) { console.error("Yükleme hatası:", e); }
+        // Oyun her açılıp kapandığında sıfırlanması için yükleme işlemi iptal edildi.
+        // İsterseniz ileride açmak için alttaki satırları geri alabilirsiniz:
+        // const saved = localStorage.getItem('megabonk_save');
+        // if (!saved) return;
+        // try { ... } catch(e) { ... }
+        
+        // Eski kayıtları da temizleyelim
+        localStorage.removeItem('megabonk_save');
     }
 
     initPauseLogic() {
@@ -98,6 +92,10 @@ export default class Game {
             }
         });
         document.getElementById("resume-button").onclick = () => this.togglePause();
+        
+        const uiPauseBtn = document.getElementById("ui-pause-btn");
+        if(uiPauseBtn) uiPauseBtn.onclick = () => this.togglePause();
+
         const pSetBtn = document.getElementById("pause-settings-button");
         if(pSetBtn) pSetBtn.onclick = () => document.getElementById("settings-screen").classList.remove("hidden");
         const pQstBtn = document.getElementById("pause-quests-button");
@@ -118,6 +116,10 @@ export default class Game {
         if(qBtn1) qBtn1.onclick = () => this.openQuests();
         if(qBtn2) qBtn2.onclick = () => this.openQuests();
         if(qBtnClose) qBtnClose.onclick = () => this.closeQuests();
+        
+        const goMenuBtn = document.getElementById("game-over-main-menu-button");
+        if(goMenuBtn) goMenuBtn.onclick = () => { location.reload(); };
+
         const tabsContainer = document.querySelector(".shop-tabs");
         if(tabsContainer && !document.getElementById("tab-trade")) {
             const tabTrade = document.createElement("button"); tabTrade.id = "tab-trade"; tabTrade.innerText = "TAKAS"; tabsContainer.appendChild(tabTrade);
