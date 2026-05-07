@@ -11,13 +11,16 @@ window.onload = () => {
     const savedDamageText = localStorage.getItem('brickbreak_damageTexts');
     window.gameInstance.showDamageTexts = savedDamageText !== null ? savedDamageText === 'true' : true;
 
-    // Kullanıcı etkileşimiyle ses motorunu başlat
-    document.body.addEventListener('click', () => {
+    // Kullanıcı etkileşimiyle ses motorunu başlat (Web ve Mobil için)
+    const startAudio = () => {
         audioController.resumeContext();
         if(!audioController.musicPlaying && audioController.bgm.volume > 0) {
             audioController.startMusic();
         }
-    }, { once: true });
+    };
+    ['click', 'touchstart', 'mousedown'].forEach(evt => {
+        document.body.addEventListener(evt, startAudio, { once: true });
+    });
 
     document.getElementById("start-button").onclick = () => {
         audioController.isMainMenu = false;

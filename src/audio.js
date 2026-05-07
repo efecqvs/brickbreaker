@@ -19,6 +19,9 @@ class AudioController {
         this.bgm = new Audio('bgm.mp3');
         this.bgm.loop = true;
         this.bgm.volume = savedVolume !== null ? parseFloat(savedVolume) : 0.5;
+        
+        // Mümkünse hemen başlat (Electron'da işe yarar)
+        this.startMusic();
     }
 
     resumeContext() {
