@@ -46,6 +46,20 @@ window.onload = () => {
         document.getElementById("settings-screen").classList.add("hidden");
     };
 
+    // Bilgi Menüsü İşlevleri
+    const infoBtn = document.getElementById("info-button");
+    if(infoBtn) {
+        infoBtn.onclick = () => {
+            document.getElementById("info-screen").classList.remove("hidden");
+        };
+    }
+    const closeInfoBtn = document.getElementById("close-info-button");
+    if(closeInfoBtn) {
+        closeInfoBtn.onclick = () => {
+            document.getElementById("info-screen").classList.add("hidden");
+        };
+    }
+
     const musicVolInput = document.getElementById("music-volume");
     const musicVolLabel = document.getElementById("music-vol-label");
     

@@ -316,12 +316,19 @@ export default class Game {
         let hitCount = 0;
         activeBricks.forEach(b => {
             if (b.gridX === gridX) {
-                b.takeDamage(this.baseBallValue * 10); // Deals 10x base damage
+                // Lazeri daha güçlü yapalım: Ya çok yüksek hasar ya da canının yarısını götürsün
+                const damage = Math.max(this.baseBallValue * 50, b.maxHp * 0.5);
+                b.takeDamage(damage); 
                 this.textsPool.get().spawn(b.x + b.w/2, b.y + b.h/2, "ZAP!", "#ff3333");
                 hitCount++;
             }
         });
         if (hitCount > 0 && window.audioController) window.audioController.playSound('hit');
+    }
+
+    applyFreeze() {
+        this.freezeTurns = 2; // 2 tur boyunca bloklar hareket etmez ve yeni sıra gelmez
+        this.textsPool.get().spawn(this.canvas.width / 2, this.canvas.height / 2, "DONDURULDU!", "#33ccff");
     }
 
     updateUI() {

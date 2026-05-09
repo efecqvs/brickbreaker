@@ -33,6 +33,28 @@
                 <button id="quests-button">GÖREVLER</button>
                 <button id="exit-button" style="background: #e74c3c;">ÇIKIŞ YAP</button>
             </div>
+            <!-- Soru İşareti Butonu -->
+            <button id="info-button" style="position: absolute; bottom: 10px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: #f1c40f; border: 3px solid #000; font-size: 1.2rem; cursor: pointer; color: #000; box-shadow: 2px 2px 0 #000; padding: 0; display: flex; align-items: center; justify-content: center; margin: 0;">?</button>
+        </div>
+
+        <!-- Bilgi Ekranı -->
+        <div id="info-screen" class="overlay hidden">
+            <h2 style="font-size: 1rem;">NASIL OYNANIR?</h2>
+            <div class="info-content" style="text-align: left; font-size: 0.55rem; max-height: 55vh; overflow-y: auto; padding: 15px; background: rgba(0,0,0,0.4); border: 2px solid #555; line-height: 1.5; font-family: monospace;">
+                <p style="color: #f1c40f; margin-bottom: 5px;">[TEMEL KONTROLLER]</p>
+                <p>• Hedef alıp topu fırlatmak için fareyi/ekranı sürükleyip bırakın.</p>
+                <p>• Bloklar üzerindeki rakamlar canını temsil eder.</p>
+                <p>• Bloklar en alta değerse OYUN BİTER!</p>
+                
+                <p style="color: #f1c40f; margin: 15px 0 5px 0;">[GÜÇLENDİRMELER]</p>
+                <p><span style="color:#fff;">(+) Ekstra Top:</span> Her tur fırlatılan top sayısını +1 artırır.</p>
+                <p><span style="color:#ff3333;">(L) Lazer:</span> Bulunduğu sütundaki tüm blokların %50 canını siler!</p>
+                <p><span style="color:#33ccff;">(F) Dondurma:</span> Blokların 2 tur boyunca hareket etmesini ve yeni sıra gelmesini engeller.</p>
+                
+                <p style="color: #f1c40f; margin: 15px 0 5px 0;">[MADENLER]</p>
+                <p>• Blokları kırarak Kömür, Demir, Altın ve Elmas topla. Bunları Market'te satarak kalıcı geliştirmeler alabilirsin.</p>
+            </div>
+            <button id="close-info-button" style="background: #e74c3c; width: 100%; margin-top: 15px;">GERİ DÖN</button>
         </div>
 
         <!-- Ayarlar Ekranı -->
